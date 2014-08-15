@@ -4,17 +4,17 @@ var studentListData = [];
 // ----- Dom Ready -----------------------------------------//
 $(document).ready(function() {
 
-	initLayout();
-	
+	initLayout();	
 
     // Populate the student table on initial page load
     populateTable();
 });
 
 // ----- Functions -----------------------------------------//
-function populateTable() {
-	
-	
+
+
+// populates student list
+function populateTable() {	
 
     var tableContent = '';
 
@@ -65,6 +65,13 @@ function showStudentInfo(person) {
     $('#studentInfoGender').text(thisStudentObject.gender);
     $('#studentInfoClassAverage').text(thisStudentObject.classAverage);
     $('#studentInfoRanking').text(thisStudentObject.ranking);
+
+    $('#addStudent').hide();
+    $('#groupStudents').hide();
+    $('#groupList').hide();
+    $('#studentInfo').show();
+
+
 };
 
 // Add Student 
@@ -183,16 +190,11 @@ function updateStudentRanking(data) {
 
 		//  Use AJAX to post the object to our addstudent service
 		$.ajax({
-			type: 'POST',
-			data: { ranking : 1},
-			url: '/users/updatestudent/' + id,
+			type: 'PUT',
+			data: { _id : id, ranking : 1},
+			url: '/users/updatestudent',
 			dataType: 'JSON'
-		}).error(function(response) {
-			debugger;
-			alert(response);
-		});
-
-		/*.done(function(response){
+		}).done(function(response){
 
 			// Check for successful (blank) response
 			if (response.msg === '') {
@@ -209,7 +211,7 @@ function updateStudentRanking(data) {
 				alert(response.msg);
 			}
 
-		});*/
+		});
 	
 	} else {
 
@@ -250,7 +252,6 @@ function groupStudents() {
 }
 
 function groupHomogeneously(event) {
-	//event.preventDefault;
 	var tableContent = '';
 	var studentNum = $('#studentNum').val();
 	var extras = 0;
@@ -297,7 +298,7 @@ function groupHomogeneously(event) {
 
 				// Insert the content string into our existing HTML table
 				$('#groupList table tbody').html(tableContent); // not good for large data sets (don't want to display so much)
-				$('#groupList').toggle();
+				$('#groupList').show();
 			 
 		});
 }
@@ -305,16 +306,51 @@ function groupHomogeneously(event) {
 function groupHeterogeneously() {
 	var tableContent = '';
 	var studentNum = $('#studentNum').val();
+	var extras = 0;
+
+	var temp_group = [];
+
 		$.getJSON('/users/studentlist_byaverage', function(data) {
+
 			
-				// for each item in our JSON, add a table row and cells content string
-				$.each(data, function() {
-					tableContent += '<tr>';
-		            tableContent += '<td><a onclick="showStudentInfo(this)" href="javascript:void(0);" class="linkshowstudent"  title="Show Details">' + this.studentname + '</a></td>';
-		            tableContent += '<td>' + this.classAverage + '</td>';
-		            tableContent += '<td><a href="#" class="linkdeletestudent" rel="' + this._id + '">delete</a></td>';
-		            tableContent += '</tr>';
-				});
+			var numGroups = Math.ceil(data.length / studentNum);
+			extras = data.length % studentNum;
+
+			
+
+			var i = 0;
+			var j = 0;
+			var index = 0;
+			var className;
+
+			
+			for (i = 0; i < numGroups; i++) {
+				for (j = 0 ; j < studentNum; j++) {
+					if (index < data.length) {
+						temp_group.push({ name : data[index].studentname, groupNum : (index % numGroups) + 1 });	
+						index++;	
+					}				
+				};		
+			};
+
+			temp_group = temp_group.sort(function (a, b) {
+			    return a.groupNum - b.groupNum;
+			});
+
+	
+			// for each item in our JSON, add a table row and cells content string
+			for (i = 0; i < temp_group.length; i++) {
+				if (temp_group[i].groupNum % 2 == 0) {
+					className = "grayBackground";
+				} else {
+					className = "noBackground";
+				}
+
+				tableContent += '<tr class="' + className + '">';
+				tableContent += '<td>' + temp_group[i].groupNum.toString() + '</td>';
+				tableContent += '<td>' + temp_group[i].name + '</td>';
+				tableContent += '</tr>';
+			};
 
 				// Insert the content string into our existing HTML table
 				$('#groupList table tbody').html(tableContent); // not good for large data sets (don't want to display so much)
@@ -328,6 +364,7 @@ function initLayout() {
 	toggle('#groupStudents');
 	toggle('#studentList');
 	toggle('#groupList');
+	toggle('#studentInfo');
 
 }
 

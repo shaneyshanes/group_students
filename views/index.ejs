@@ -5,92 +5,102 @@
    	<% include partials/jsdefaults.ejs %>
    </head>
 	<body>
-	    <h1><%= title %></h1>
-	    <p>Let's group our Students!</p>
+	    <div class="container-fluid">
+	    	<div class="row">
+	    		<div class="col-lg-3 col-md-3 sm-hidden xs-hidden"></div>
+	    			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">	 
+	    				<div class="page-header">
+						  	<h1><%= title %><br><small> A simple web app to sort your students into groups</small></h1>
+						</div>   				
+	    				<div class="row jumbotron">
+	    					<div id="studentInfo">
+					    		<h2> Student Info </h2>		    	
+						    		<strong>Name: </strong><span id="studentInfoName"></span><br>
+						    		<strong>Age: </strong><span id="studentInfoAge"></span><br>
+						    		<strong>Gender: </strong><span id="studentInfoGender"></span><br>
+						    		<strong>Class Average: </strong><span id="studentInfoClassAverage"></span><br>
+						    		<!--<strong>Ranking: </strong><span id="studentInfoRanking"></span><br>-->
+					    	</div><!-- studentInfo -->
 
-	    <div id="wrapper">
-	    	<div id="studentInfo">
-	    		<h2> Student Info </h2>		    	
-		    		<strong>Name: </strong><span id="studentInfoName"></span><br>
-		    		<strong>Age: </strong><span id="studentInfoAge"></span><br>
-		    		<strong>Gender: </strong><span id="studentInfoGender"></span><br>
-		    		<strong>Class Average: </strong><span id="studentInfoClassAverage"></span><br>
-		    		<strong>Ranking: </strong><span id="studentInfoRanking"></span><br>
-	    	</div><!-- studentInfo -->
+							<h2><a onclick="toggle('#addStudent'); $('#studentInfo').hide();" href="javascript:void(0);">Add Student</a></h2>
+					    	<form id="addStudent">
+					    		<div class="form-horizontal" role="form">
+								 	<div class="form-group form">
+								 		<label for="studentName">Name
+								 			<input class="clearInput" id="studentName" type="text" placeholder="Student name" autofocus/>
+								 		</label>			    	
+								 		<label for="studentAge">Age
+								    		<input class="clearInput" id="studentAge" min=1 type="number" placeholder="Age"/>
+								    	</label>
+								    	<label for="studentGender">Gender
+								    		<input class="clearInput" id="studentGender" type="text" placeholder="Gender"/>
+								    	</label>
+								    	<label for="studentClassAverage">Class Average
+								    	   	<input class="clearInput" id="studentClassAverage" min=0 type="number" placeholder="ClassAverage"/>
+								    	</label>
+								    	<button id="btnAddStudent" type="button" onClick="addStudent();">Add Student</button>		   	
+									</div>
+								</div>
+							</form><!-- addStudent -->
 
-			<h2><a onclick="toggle('#addStudent')" href="javascript:void(0);">Add Student</a></h2>
-	    	<form id="addStudent">
-			 	<div class="form-group">
-			 		<label for="studentName">Name
-			 			<input class="clearInput" id="studentName" type="text" placeholder="Student name"/>
-			 		</label>			    	
-			 		<label for="studentAge">Age
-			    		<input class="clearInput" id="studentAge" type="number" placeholder="Age"/>
-			    	</label>
-			    	<label for="studentGender">Gender
-			    		<input class="clearInput" id="studentGender" type="text" placeholder="Gender"/>
-			    	</label>
-			    	<label for="studentClassAverage">Class Average
-			    	   	<input class="clearInput" id="studentClassAverage" type="text" placeholder="ClassAverage"/>
-			    	</label>
-			    	<button id="btnAddStudent" onClick="addStudent();">Add Student</button>			    	
-				</div>
-			</form><!-- addStudent -->
+							<h2><a onclick="toggle('#groupStudents'); $('#studentInfo').hide(); toggle('#groupList');" href="javascript:void(0);">Group Students</a></h2>
+					    	<form id="groupStudents">
+							 	<div class="form-group">
+							 		
 
-			<h2><a onclick="toggle('#groupStudents')" href="javascript:void(0);">Group Students</a></h2>
-	    	<form id="groupStudents">
-			 	<div class="form-group">
-			 		
+							 		<div class="radio">
+									  	<label>
+									    	<input type="radio" name="optionsRadios" value="homoRadio" checked>
+									    	Group Homogeneously
+									  	</label>
+									</div>
+									<div class="radio">
+									  	<label>
+									    	<input type="radio" name="optionsRadios" value="heteroRadio">
+									    	Group Heterogeneously
+									  	</label>
+									</div>		
 
-			 		<div class="radio">
-					  	<label>
-					    	<input type="radio" name="optionsRadios" value="homoRadio" checked>
-					    	Group Homogeneously
-					  	</label>
-					</div>
-					<div class="radio">
-					  	<label>
-					    	<input type="radio" name="optionsRadios" value="heteroRadio">
-					    	Group Heterogeneously
-					  	</label>
-					</div>		
+									<label for="studentNum">Students per group
+							 			<input class="clearInput" id="studentNum" min=2 type="number" placeholder="Students per group"/>
+							 		</label>		
 
-					<label for="studentNum">Students per group
-			 			<input class="clearInput" id="studentNum" type="number" placeholder="Students per group"/>
-			 		</label>		
+							 		
+							    	<button id="btnGroupStudents" type="button" onClick="groupStudents();">Group Students</button>	    	
+							    	
+								</div>
+							</form><!-- groupStudents -->
 
-			 		
-			    	<button id="btnGroupStudents" type="button" onClick="groupStudents();">Group Students</button>	    	
-			    	
-				</div>
-			</form><!-- groupStudents -->
-
-			<div id="groupList">
-	    		<table>
-					<thead>
-						<th> Group </th>
-						<th> Students </th>
-					</thead>
-					
-					<tbody></tbody>
-				</table>
-	    	</div><!-- groupList -->
+							<div id="groupList">
+					    		<table class="table table-condensed table-responsive">
+									<thead>
+										<th> Group </th>
+										<th> Students </th>
+										<!-- <th> Class Average </th> -->
+									</thead>
+									
+									<tbody></tbody>
+								</table>
+					    	</div><!-- groupList -->
 
 
-			<h2><a onclick="toggle('#studentList')" href="javascript:void(0);">Student List</a></h2>
-	    	<div id="studentList">
-	    		<table>
-					<thead>
-						<th> Student Name </th>
-						<th> Class Average </th>
-						<th> Delete? </th>
-					</thead>
+							<h2><a onclick="toggle('#studentList')" href="javascript:void(0);">Student List</a></h2>
+					    	<div id="studentList">
+					    		<table class="table table-condensed table-responsive">
+									<thead>
+										<th> Student Name </th>
+										<th> Class Average </th>
+										<th> Delete? </th>
+									</thead>
 
-					<tbody></tbody>
-				</table>
-	    	</div><!-- studentList -->
-
-	    </div><!-- wrapper -->
+									<tbody></tbody>
+								</table>
+					    	</div><!-- studentList -->
+					    </div><!-- row -->
+				    </div>
+				<div class="col-lg-3 col-md-3 sm-hidden xs-hidden"></div>
+		    </div>
+	    </div><!-- container-fluid -->
   
 	   
 	</body>

@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 
 // Database
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/group_students", {native_parser:true});
+
+//var db = mongo.db("mongodb://localhost:27017/group_students", {native_parser:true});
+var db = mongo.db("mongodb://group_students_user:group_students_password@ds033709.mongolab.com:33709/group_students", {native_parser:true});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

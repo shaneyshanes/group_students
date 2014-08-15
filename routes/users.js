@@ -20,7 +20,6 @@ router.get('/studentlist_byaverage', function(req, res) {
 
 /* POST to addstudent */
 router.post('/addstudent', function(req, res) {
-	alert(req);
 	var db = req.db;
 	db.collection('studentlist').insert(req.body, function(err, result) {
 		res.send(
@@ -30,12 +29,12 @@ router.post('/addstudent', function(req, res) {
 	});
 });
 
-/* POST to updatestudent */
-router.post('/updatestudent/:id', function(req, res) {
+/* PUT to updatestudent */
+router.put('/updatestudent', function(req, res) {
 	alert('test');
 	var db = req.db;
-	var studentToUpdate = req.params.id;
-	db.collection('studentlist').update({_id : req.collection.id(studentToUpdate)}, {$set : req.body},  function(err, result) {
+	var studentToUpdate = req.body._id;
+	db.collection('studentlist').update({_id : req.collection.id(studentToUpdate)}, {$set : { ranking : req.body.ranking } },  function(err, result) {
 		res.send(
 			// change this to if/else
 			(err === null) ? { msg: '' } : { msg: 'error: ' + err}

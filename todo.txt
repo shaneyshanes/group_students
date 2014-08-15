@@ -3,5 +3,6 @@
 	add grouping function
 ----make add student hide/show css stuff
 ----sort alphabetially
+	add more robust error checking for input forms (2 places)
 	add bootstrap to everything
 

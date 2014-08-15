@@ -1,0 +1,103 @@
+body {
+  padding: 30px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+h2 {
+	margin:0 0 .5em 0;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+#wrapper {
+	padding-left:312px;
+	position:relative;
+}
+
+
+
+#studentList {
+	margin:0 0 30px 0;
+}
+	
+	#studentList table {
+		border-collapse:separate;
+		border-spacing:1px;
+		background:#CCC;
+	}
+		
+		#studentList table th {
+			background:#EEE;
+			font-weight:600;
+			padding:10px 20px;
+			text-align:center;
+		}
+		
+		#studentList table tbody {
+			padding:0; margin:0;
+			border-collapse:collapse;
+			border-spacing:0px;
+		}
+			
+			#studentList table td {
+				background:#FFF;
+				padding:5px 10px;
+				text-align:center;
+			}
+
+#studentInfo {
+	width:250px;
+	position:absolute;
+	top:0; left:0;
+}
+	
+	#studentInfo p {
+		padding:15px;
+		border:1px solid #CCC;
+		background:rgba(80,120,255,0.05);
+	}
+
+fieldset {
+	border:0;
+	padding:0; margin:0;
+}
+
+#groupList {
+	margin:0 0 30px 0;
+}
+	
+	#groupList table {
+		border-collapse:separate;
+		border-spacing:1px;
+		background:#CCC;
+	}
+		
+		#groupList table th {
+			background:#EEE;
+			font-weight:600;
+			padding:10px 20px;
+			text-align:center;
+		}
+		
+		#groupList table tbody {
+			padding:0; margin:0;
+			border-collapse:collapse;
+			border-spacing:0px;
+		}
+			
+			#groupList table td {
+				background:#FFF;
+				padding:5px 10px;
+				text-align:center;
+			}
+
+.grayBackground {
+	background-color: #808080 !important;
+}
+
+.noBackground {
+	background-color: #000 !important;
+}

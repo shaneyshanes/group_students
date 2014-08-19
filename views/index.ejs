@@ -86,7 +86,16 @@
 
 							<h2><a onclick="toggle('#studentList')" href="javascript:void(0);">Student List</a></h2>
 					    	<div id="studentList">
-					    		<table class="table table-condensed table-responsive">
+					    		<form role="form">
+  									<div class="form-group">Display by: 
+  										<select id = "selectDisplay" onchange = "populateTable()">
+										  	<option  value="name">Name</option>
+										  	<option value="average">Class Average</option>										  	
+										</select>
+									</div>
+								</form>
+
+								<table class="table table-condensed table-responsive">
 									<thead>
 										<th> Student Name </th>
 										<th> Class Average </th>

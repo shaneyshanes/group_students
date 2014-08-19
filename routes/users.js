@@ -21,6 +21,8 @@ router.get('/studentlist_byaverage', function(req, res) {
 /* POST to addstudent */
 router.post('/addstudent', function(req, res) {
 	var db = req.db;
+	req.body.age = parseInt(req.body.age);
+	req.body.classAverage = parseInt(req.body.classAverage);
 	db.collection('studentlist').insert(req.body, function(err, result) {
 		res.send(
 			// change this to if/else
@@ -31,7 +33,7 @@ router.post('/addstudent', function(req, res) {
 
 /* PUT to updatestudent */
 router.put('/updatestudent', function(req, res) {
-	alert('test');
+	
 	var db = req.db;
 	var studentToUpdate = req.body._id;
 	db.collection('studentlist').update({_id : req.collection.id(studentToUpdate)}, {$set : { ranking : req.body.ranking } },  function(err, result) {

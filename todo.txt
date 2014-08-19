@@ -1,8 +1,14 @@
+dashes mean done
+
+	make better todo system
+	and angularjs for efficient code
+
 ----add delete function
-	add ranking function
-	add grouping function
+----add ranking function
+----add grouping function
 ----make add student hide/show css stuff
 ----sort alphabetially
-	add more robust error checking for input forms (2 places)
-	add bootstrap to everything
+----add more robust error checking for input forms (2 places)
+----add bootstrap to everything
 
+	

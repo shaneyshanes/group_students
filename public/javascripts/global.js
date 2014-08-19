@@ -17,9 +17,15 @@ $(document).ready(function() {
 function populateTable() {	
 
     var tableContent = '';
+    var displayType = $('#selectDisplay').find(":selected").text();
 
-    
-	$.getJSON('/users/studentlist_byname', function(data) {
+    if (displayType == "Name") {
+    	var listUsersBy = '/users/studentlist_byname';
+    } else {
+    	var listUsersBy = '/users/studentlist_byaverage';
+    }   
+
+	$.getJSON(listUsersBy, function(data) {
 
 		/*	Stick user data array into a userlist variable in the global object
 			bad practice, do something else for large data like loading
@@ -99,7 +105,6 @@ function addStudent(event) {
             'age': age,
             'gender': gender,
             'classAverage': classAverage
-            //'ranking' : 0
 		}
 
 		//  Use AJAX to post the object to our addstudent service

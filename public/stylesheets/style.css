@@ -3,26 +3,17 @@ body {
   //font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-h2 {
-	margin:0 0 .5em 0;
+input {
+	margin-bottom: 7px;
 }
 
-a {
-  color: #00B7FF;
+select {
+	margin-bottom: 7px;
 }
-
-
-#wrapper {
-	padding-left:312px;
-	position:relative;
-}
-
-
 
 
 #studentInfo {
 	width:250px;
-	float: right;
 }
 	
 	#studentInfo p {
@@ -30,14 +21,11 @@ a {
 		border:1px solid #CCC;
 	}
 
-
-
-
-
 .grayBackground {
-	background-color: #A4A4A4;
+	background-color: #BDBDBD;
 	color: #fff;
 }
+
 
 .noBackground {
 	background-color: #fff;

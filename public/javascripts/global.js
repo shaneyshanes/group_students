@@ -74,8 +74,8 @@ function showStudentInfo(person) {
     $('#studentInfoClassAverage').text(thisStudentObject.classAverage);
 
     $('#addStudent').hide();
-    $('#groupStudents').hide();
-    $('#groupList').hide();
+    //$('#groupStudents').hide();
+    //$('#groupList').hide();
     $('#studentInfo').show();
 
 
@@ -290,12 +290,14 @@ function groupHomogeneously(event) {
 			var j = 0;
 			var index = 0;
 			var className;
+			var groupStudentName;
 
 			
 			for (i = 0; i < numGroups; i++) {
 				for (j = 0 ; j < studentNum; j++) {
 					if (index < data.length) {
-						temp_group.push({ name : data[index].studentname, groupNum : i + 1});	
+						groupedStudentName = '<a onclick="showStudentInfo(this)" href="javascript:void(0);" class="linkshowstudent"  title="Show Details">' + data[index].studentname + '</a>';
+						temp_group.push({ name : groupedStudentName, groupNum : i + 1});	
 						index++;	
 					}				
 				};		

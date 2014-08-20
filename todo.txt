@@ -1,8 +1,14 @@
-dashes mean done
+first date is when it's added to the todo list, 
+second date is when it's done
 
-	make better todo system
-	and angularjs for efficient code
+8/19/14	-  			make better todo system
+8/19/14	- 			add angularjs for efficient code (angularize)
 
+8/19/14	- 8/19/14		add edit function
+8/19/14 - 8/19/14 	change gender input to a select option
+
+
+assigned and finished prior to 8/19/14:
 ----add delete function
 ----add ranking function
 ----add grouping function

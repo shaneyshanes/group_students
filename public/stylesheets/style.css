@@ -23,14 +23,11 @@ a {
 #studentInfo {
 	width:250px;
 	float: right;
-	//position:absolute;
-	//top:0; left:0;
 }
 	
 	#studentInfo p {
 		padding:15px;
 		border:1px solid #CCC;
-		//background:rgba(80,120,255,0.05);
 	}
 
 

@@ -40,7 +40,9 @@ function populateTable() {
 			tableContent += '<tr>';
             tableContent += '<td><a onclick="showStudentInfo(this)" href="javascript:void(0);" class="linkshowstudent"  title="Show Details">' + this.studentname + '</a></td>';
             tableContent += '<td>' + this.classAverage + '</td>';
-            tableContent += '<td><a onclick="deleteStudent(this)" href="javascript:void(0);" class="linkdeletestudent" rel="' + this._id + '">delete</a></td>';
+            tableContent += '<td><a onclick="editStudent(this)" href="javascript:void(0);" class="linkeditstudent" rel="' + this._id + '">edit</a> / ';
+            //tableContent += '<td><a data-toggle="modal" data-target="#myModal" href="#" class="linkeditstudent" rel="' + this._id + '">edit</a> / ';
+            tableContent += '<a onclick="deleteStudent(this)" href="javascript:void(0);" class="linkdeletestudent" rel="' + this._id + '">delete</a></td>';
             tableContent += '</tr>';
 		});
 
@@ -70,7 +72,6 @@ function showStudentInfo(person) {
     $('#studentInfoAge').text(thisStudentObject.age);
     $('#studentInfoGender').text(thisStudentObject.gender);
     $('#studentInfoClassAverage').text(thisStudentObject.classAverage);
-    $('#studentInfoRanking').text(thisStudentObject.ranking);
 
     $('#addStudent').hide();
     $('#groupStudents').hide();
@@ -97,7 +98,7 @@ function addStudent(event) {
 		// If it is, compile all user info into one object
 		var name = $('#studentName').val();
 		var age = $('#studentAge').val();
-		var gender = $('#studentGender').val();
+		var gender = $('#studentGender').find(":selected").text();
 		var classAverage = $('#studentClassAverage').val();
 
 		var newStudent = {
@@ -176,55 +177,69 @@ function deleteStudent(student) {
 
 };
 
-// Update Student 
-function updateStudentRanking(data) {
+// Edit Student
+function editStudent(student) {	
 
-	// Super basic validation - increase errorCount variable if any fields are blank
-	// make this more robust
-	var errorCount = 0;
-	$('#updateStudent input').each(function(index, val) {
-		if($(this).val() === '') {
-			errorCount++;
-		}
-	});
+	// Retrieve username
+	var thisStudentId = $(student).attr('rel');
 
-	// Check and make sure errorCount's still at zero
-	if(errorCount === 0) {
-		// If it is, compile all user info into one object
-		var id = data[0]._id;
+	// Get Index of object based on id value
+	var arrayPosition = studentListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisStudentId);
 
-		//  Use AJAX to post the object to our addstudent service
-		$.ajax({
-			type: 'PUT',
-			data: { _id : id, ranking : 1},
-			url: '/users/updatestudent',
-			dataType: 'JSON'
-		}).done(function(response){
+	// Get student object
+	var thisStudentObject = studentListData[arrayPosition];
 
-			// Check for successful (blank) response
-			if (response.msg === '') {
+	$('#editStudentName').val(thisStudentObject.studentname);
+    $('#editStudentAge').val(thisStudentObject.age);
+    $('#editStudentGender').val(thisStudentObject.gender);
+    $('#editStudentClassAverage').val(thisStudentObject.classAverage);
 
-				// Clear the form inputs
-				$('.clearInput').val('');
+    
+ 	$("#btnEditStudent").attr("name", thisStudentId);
 
-				// Update the table
-				populateTable();
+    $('#myModal').modal('show');	
 
-			} else {
-
-				// If something goes wrong, alert the error message that our service returned
-				alert(response.msg);
-			}
-
-		});
-	
-	} else {
-
-		// If errorCount is more than 0, error out
-		alert('Please fill in all fields');
-		return false;
-	} 
 };
+
+// Updates student info after user edits
+function updateStudentInfo(event) {
+	
+	var id = event.name;
+	var name = $('#editStudentName').val();
+	var age = $('#editStudentAge').val();
+	var gender = $('#editStudentGender').find(":selected").text();
+	var classAverage = $('#editStudentClassAverage').val();
+
+	var editData = {
+		'studentname': name,
+        'age': age,
+        'gender': gender,
+        'classAverage': classAverage
+	}	
+
+	$.ajax({
+		type: 'PUT',
+		url: '/users/editstudent/' + id,
+		data: editData
+	}).done(function(response) {
+		
+		// Check for success
+		if (response.msg === '') {
+
+		} else {
+			alert(response.msg);
+		}
+
+		// Update table
+		$('#myModal').modal('hide');
+		populateTable();
+	});
+	
+}
+
+
+
+
 
 
 function groupStudents() {

@@ -10,7 +10,7 @@
 	    		<div class="col-lg-3 col-md-3 sm-hidden xs-hidden"></div>
 	    			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">	 
 	    				<div class="page-header">
-						  	<h1><%= title %><br><small> A simple web app to sort your students into groups</small></h1>
+						  	<h1><%= title %><br><small> A simple web app to sort your students into groups.</small></h1>
 						</div>   				
 	    				<div class="row jumbotron">
 	    					<div id="studentInfo">
@@ -27,18 +27,26 @@
 					    		<div class="form-horizontal" role="form">
 								 	<div class="form-group form">
 								 		<label for="studentName">Name
-								 			<input class="clearInput" id="studentName" type="text" placeholder="Student name" autofocus/>
-								 		</label>			    	
+								 			<input class="clearInput form-control" id="studentName" type="text" placeholder="Student name" autofocus/>
+								 		</label>
+								 		    	
 								 		<label for="studentAge">Age
-								    		<input class="clearInput" id="studentAge" min=1 type="number" placeholder="Age"/>
+								    		<input class="clearInput form-control" id="studentAge" min=1 type="number" placeholder="Age"/>
 								    	</label>
-								    	<label for="studentGender">Gender
-								    		<input class="clearInput" id="studentGender" type="text" placeholder="Gender"/>
-								    	</label>
+
+								    	
+  										<label for="studentGender">Gender
+	  										<select class="form-control clearInput" id="studentGender">
+											  	<option value="male">Male</option>
+											  	<option value="female">Female</option>										  	
+											</select>
+										</label>
+
 								    	<label for="studentClassAverage">Class Average
-								    	   	<input class="clearInput" id="studentClassAverage" min=0 type="number" placeholder="ClassAverage"/>
+								    	   	<input class="clearInput form-control" id="studentClassAverage" min=0 type="number" placeholder="ClassAverage"/>
 								    	</label>
-								    	<button id="btnAddStudent" type="button" onClick="addStudent();">Add Student</button>		   	
+
+								    	<button class="btn btn-default" id="btnAddStudent" type="button" onClick="addStudent();">Add Student</button>		   	
 									</div>
 								</div>
 							</form><!-- addStudent -->
@@ -49,24 +57,26 @@
 							 		
 
 							 		<div class="radio">
-									  	<label>
-									    	<input type="radio" name="optionsRadios" value="homoRadio" checked>
-									    	Group Homogeneously
-									  	</label>
+									  	
+								    	<input id="homoRadio" type="radio" name="optionsRadios" value="homoRadio" checked>
+								    	<a href="#" data-toggle="tooltip" title="Smart kids in one group ... not-so-smart kids in another">
+									    	<label for="homoRadio">Group Homogeneously</label></a>
+									  	
 									</div>
 									<div class="radio">
-									  	<label>
-									    	<input type="radio" name="optionsRadios" value="heteroRadio">
-									    	Group Heterogeneously
-									  	</label>
+									  	
+								    	<input id="heteroRadio" type="radio" name="optionsRadios" value="heteroRadio">
+								    	<a href="#" data-toggle="tooltip" title="A nice mixture of skill ranges in each group">
+								    		<label for="heteroRadio">Group Heterogeneously</label></a>									    	 
+									  	
 									</div>		
 
 									<label for="studentNum">Students per group
-							 			<input class="clearInput" id="studentNum" min=2 type="number" placeholder="Students per group"/>
+							 			<input class="clearInput form-control" id="studentNum" min=2 type="number" placeholder="Students per group"/>
 							 		</label>		
 
 							 		
-							    	<button id="btnGroupStudents" type="button" onClick="groupStudents();">Group Students</button>	    	
+							    	<button id="btnGroupStudents" type="button" class="btn btn-default" onClick="groupStudents();">Group Students</button>	    	
 							    	
 								</div>
 							</form><!-- groupStudents -->
@@ -87,11 +97,13 @@
 							<h2><a onclick="toggle('#studentList')" href="javascript:void(0);">Student List</a></h2>
 					    	<div id="studentList">
 					    		<form role="form">
-  									<div class="form-group">Display by: 
-  										<select id = "selectDisplay" onchange = "populateTable()">
-										  	<option  value="name">Name</option>
-										  	<option value="average">Class Average</option>										  	
-										</select>
+  									<div class="form-group"> 
+  										<label>Display by
+	  										<select class="form-control" id = "selectDisplay" onchange = "populateTable()">
+											  	<option value="name">Name</option>
+											  	<option value="average">Class Average</option>										  	
+											</select>
+										</label>
 									</div>
 								</form>
 
@@ -99,11 +111,57 @@
 									<thead>
 										<th> Student Name </th>
 										<th> Class Average </th>
-										<th> Delete? </th>
+										<th> Edit / Delete? </th>
 									</thead>
 
 									<tbody></tbody>
 								</table>
+
+								<!-- Modal -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								  <div class="modal-dialog modal-lg">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								        <h2 class="modal-title" id="myModalLabel">Edit Student Info</h2>
+								      </div>
+								      <div class="modal-body">
+								        <form class="center-block" id="editStudent">
+								    		<div class="center-block form-horizontal" role="form">
+											 	<div class="form-group form">
+											 		<label for="studentName">Name
+											 			<input class="clearInput form-control" id="editStudentName" type="text" autofocus/>
+											 		</label>
+											 		    	
+											 		<label for="studentAge">Age
+											    		<input class="clearInput form-control" id="editStudentAge" min=1 type="number"/>
+											    	</label>
+
+											    	
+			  										<label for="studentGender">Gender
+				  										<select class="form-control clearInput" id="editStudentGender">
+														  	<option value="Male">Male</option>
+														  	<option value="Female">Female</option>										  	
+														</select>
+													</label>
+
+											    	<label for="studentClassAverage">Class Average
+											    	   	<input class="clearInput form-control" id="editStudentClassAverage" min=0 type="number"/>
+											    	</label>		   	
+												
+
+													<button class="btn btn-default" id="btnEditStudent" type="button" onClick="updateStudentInfo(this);">Save Changes</button>
+												</div>
+											</div>
+
+											
+										</form><!-- addStudent -->
+								      </div>								     
+								    </div>
+								  </div>
+								</div><!-- Modal -->
+
+
 					    	</div><!-- studentList -->
 					    </div><!-- row -->
 				    </div>

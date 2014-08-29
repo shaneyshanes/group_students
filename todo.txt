@@ -4,7 +4,7 @@ second date is when it's done
 8/19/14	-  			make better todo system
 8/19/14	- 			add angularjs for efficient code (angularize)
 
-8/19/14	- 8/19/14		add edit function
+8/19/14	- 8/19/14	add edit function
 8/19/14 - 8/19/14 	change gender input to a select option
 
 
